@@ -13,8 +13,8 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')
-        ->orderBy('id', 'DESC')
-        ->get();
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
         return view('product.index', compact('products'));
     }
 
@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**

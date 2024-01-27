@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,8 +12,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        $data = DB::table('categories')->get();
+        $categories = Category::paginate(10);
+        
         return view('category.index', compact('categories'));
     }
 
