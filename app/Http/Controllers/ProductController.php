@@ -21,6 +21,12 @@ class ProductController extends Controller
             ->paginate(10);
         return view('product.index', compact('products'));
     }
+    public function productJson()
+    {
+        $products = Product::with('category')
+            ->orderBy('id', 'DESC')->get();
+            return response()->json(['products' => $products]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -65,7 +71,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        // return view('product.show', compact('product'));
+        return view('users.single',compact('product'));
     }
 
     /**

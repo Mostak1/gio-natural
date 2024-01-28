@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ContactFormMail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -30,7 +31,10 @@ class HomeController extends Controller
     }
     public function shop()
     {
-        return view('users.shop');
+        $products = Product::with('category')
+        ->orderBy('id', 'DESC')
+        ->paginate(6);
+        return view('users.shop',compact('products'));
     }
     public function submitContactForm1(Request $request)
     {

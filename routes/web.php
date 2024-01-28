@@ -24,6 +24,7 @@ Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('news', [HomeController::class, 'news'])->name('news');
 Route::get('cart', [HomeController::class, 'cart'])->name('cart');
 Route::post('/submit-contact-form', [HomeController::class, 'submitContactForm'])->name('contactForm');
+Route::get('productjson', [ProductController::class, 'productJson']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

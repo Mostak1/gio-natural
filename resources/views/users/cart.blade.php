@@ -33,32 +33,9 @@
 									<th class="product-total">Total</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr class="table-body-row">
-									<td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-									<td class="product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
-									<td class="product-name">Strawberry</td>
-									<td class="product-price">$85</td>
-									<td class="product-quantity"><input type="number" placeholder="0"></td>
-									<td class="product-total">1</td>
-								</tr>
-								<tr class="table-body-row">
-									<td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-									<td class="product-image"><img src="assets/img/products/product-img-2.jpg" alt=""></td>
-									<td class="product-name">Berry</td>
-									<td class="product-price">$70</td>
-									<td class="product-quantity"><input type="number" placeholder="0"></td>
-									<td class="product-total">1</td>
-								</tr>
-								<tr class="table-body-row">
-									<td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-									<td class="product-image"><img src="assets/img/products/product-img-3.jpg" alt=""></td>
-									<td class="product-name">Lemon</td>
-									<td class="product-price">$35</td>
-									<td class="product-quantity"><input type="number" placeholder="0"></td>
-									<td class="product-total">1</td>
-								</tr>
-							</tbody>
+							<tbody id="cartTableBody">
+                                <!-- Cart items will be displayed here -->
+                            </tbody>
 						</table>
 					</div>
 				</div>
@@ -109,3 +86,85 @@
 	<!-- end cart -->
 
 @endsection
+@section('scripts')
+    <!-- ... (previous script code) ... -->
+
+    <script>
+        $(document).ready(function() {
+            // Retrieve the cart data from the session
+            var cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+
+            // Display cart items
+            displayCartItems(cart);
+
+            function displayCartItems(cart) {
+                var cartTableBody = $('#cartTableBody');
+                cartTableBody.empty();
+
+                // Loop through the cart items
+                $.each(cart, function(index, productId) {
+                    // Assuming you have a JavaScript function to retrieve product details by ID
+                    var product = getProductDetails(productId);
+
+                    // Display the product in the cart table
+                    var cartItemHtml = '<tr>' +
+                        '<td class="product-remove"><button class="remove-item" data-id="' + productId + '">Remove</button></td>' +
+                        '<td class="product-image"><img src="{{ asset('storage/') }}/' + product.thumbnail + '" alt="Product Image" height="50px"></td>' +
+                        '<td class="product-name">' + product.title + '</td>' +
+                        '<td class="product-price">' + product.price + ' TK</td>' +
+                        '<td class="product-quantity"><input type="number" class="quantity-input" value="1" min="1"></td>' +
+                        '<td class="product-total">' + product.price + ' TK</td>' +
+                        '</tr>';
+
+                    cartTableBody.append(cartItemHtml);
+                });
+
+                updateCartTotal();
+            }
+
+            // Event handling for removing an item from the cart
+            $('#cartTableBody').on('click', '.remove-item', function() {
+                var productId = $(this).data('id');
+                removeItemFromCart(productId);
+            });
+
+            // Event handling for changing quantity
+            $('#cartTableBody').on('change', '.quantity-input', function() {
+                updateCartTotal();
+            });
+
+            function removeItemFromCart(productId) {
+                // Remove the item from the cart array
+                cart = cart.filter(function(item) {
+                    return item !== productId;
+                });
+
+                // Update the session
+                sessionStorage.setItem('cart', JSON.stringify(cart));
+
+                // Update the displayed cart items
+                displayCartItems(cart);
+            }
+
+            function updateCartTotal() {
+                var total = 0;
+
+                // Loop through the displayed items and update the total
+                $('#cartTableBody tr').each(function() {
+                    var price = parseFloat($(this).find('.product-price').text());
+                    var quantity = parseInt($(this).find('.quantity-input').val());
+                    var itemTotal = price * quantity;
+
+                    total += itemTotal;
+
+                    $(this).find('.product-total').text(itemTotal.toFixed(2) + ' TK');
+                });
+
+                // Update the total in your UI (replace '#totalAmount' with the actual selector)
+                $('#totalAmount').text(total.toFixed(2) + ' TK');
+            }
+
+            // ... (remaining script code) ...
+        });
+    </script>
+    @endsection
