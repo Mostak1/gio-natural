@@ -25,7 +25,10 @@ Route::get('news', [HomeController::class, 'news'])->name('news');
 Route::get('cart', [HomeController::class, 'cart'])->name('cart');
 Route::post('/submit-contact-form', [HomeController::class, 'submitContactForm'])->name('contactForm');
 Route::get('productjson', [ProductController::class, 'productJson']);
-
+Route::resources([
+    // 'category' => CategoryController::class,
+    'product' => ProductController::class,
+ ]);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -36,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resources([
         'category' => CategoryController::class,
-        'product' => ProductController::class,
+        // 'product' => ProductController::class,
      ]);
      
 });

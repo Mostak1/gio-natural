@@ -25,9 +25,13 @@ class HomeController extends Controller
     {
         return view('users.news');
     }
-    public function cart()
+    public function cart(Request $request)
     {
-        return view('users.cart');
+        $cartItemIds = $request->session()->get('cart', []);
+// dd($cartItemIds );
+        // Fetch the actual product details from the database based on the IDs
+        $cartItems = Product::whereIn('id', $cartItemIds)->get();
+        return view('users.cart',compact('cartItems'));
     }
     public function shop()
     {
