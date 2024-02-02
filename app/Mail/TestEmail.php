@@ -9,31 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ContactFormMail extends Mailable
+class TestEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    // public $name='';
-    // public $email='';
-    // public $phone='';
-    // public $subject='';
-    // public $message='';
-    public $name;
-    public $email;
-    public $phone;
-    public $subject;
-    public $message;
-    // public function __construct($name, $email, $phone, $subject, $message)
-    public function __construct($formData)
+    public $name ="";
+    public function __construct($name)
     {
-        $this->name = $formData['name'];
-        $this->email = $formData['email'];
-        $this->phone = $formData['phone'];
-        $this->subject = $formData['subject'];
-        $this->message = $formData['message'];
+        $this->name = $name;
     }
 
     /**
@@ -42,7 +28,7 @@ class ContactFormMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Form Mail',
+            subject: 'Test Email',
         );
     }
 
@@ -53,6 +39,7 @@ class ContactFormMail extends Mailable
     {
         return new Content(
             view: 'emails.contact-form',
+           
         );
     }
 

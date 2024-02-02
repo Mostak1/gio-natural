@@ -6,7 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +27,12 @@ Route::get('cart', [HomeController::class, 'cart'])->name('cart');
 Route::post('submit-contact-form', [HomeController::class, 'submitContactForm'])->name('contactForm');
 Route::get('productjson', [ProductController::class, 'productJson']);
 Route::post('place-order', [OrderController::class, 'placeOrder'])->name('place-order');
+Route::get('generate-token', [PaymentController::class, 'showGenerateTokenView']);
+Route::get('create-payment', [PaymentController::class, 'showCreatePaymentView']);
+
+
+Route::get('/generate-token', [PaymentController::class, 'generateToken']);
+Route::post('/create-payment', [PaymentController::class, 'createPayment']);
 
 Route::resources([
     // 'category' => CategoryController::class,
