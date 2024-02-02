@@ -9,12 +9,7 @@
         });
     </script>
 @endif
-{{-- @if ($message = Session::get('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{ $message }}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif --}}
+
 
 @if ($message = Session::get('error'))
 <script>
@@ -24,10 +19,7 @@
         text: '{{ $message }}',
     });
 </script>
-    {{-- <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>{{ $message }}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div> --}}
+   
 @endif
 @if ($message = Session::get('warning'))
 <script>
@@ -37,10 +29,7 @@
         text: '{{ $message }}',
     });
 </script>
-    {{-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{ $message }}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div> --}}
+   
 @endif
 @if ($message = Session::get('info'))
 <script>
@@ -50,10 +39,7 @@
         text: '{{ $message }}',
     });
 </script>
-    {{-- <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <strong>{{ $message }}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div> --}}
+   
 @endif
 {{-- For Laravel Controller Validation --}}
 @if ($errors->any())

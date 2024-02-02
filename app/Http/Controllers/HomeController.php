@@ -72,7 +72,7 @@ class HomeController extends Controller
             ]);
 
             // Send email to the specified email address
-            Mail::to('mostakidb@gmail.com')->send(new ContactFormMail($validatedData));
+            Mail::to(users:'mostakidb@gmail.com')->send(new ContactFormMail($validatedData));
 
             // Redirect back with success message
             return redirect()->back()->with('success', 'Email sent successfully!');

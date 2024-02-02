@@ -1,5 +1,49 @@
 @extends('users.layouts.main')
 @section('title', 'Cart- Gio-Natural')
+@section('styles')
+    <style>
+        /* Define your custom styles here */
+        .colorful-popup {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+
+        .colorful-header {
+            background-color: #2980b9;
+            color: #ffffff;
+        }
+
+        .colorful-title {
+            color: #4b2121;
+        }
+
+        .colorful-close-button {
+            color: #ffffff;
+        }
+
+        .colorful-icon {
+            color: #ffffff;
+        }
+
+        .colorful-content {
+            color: #ffffff;
+        }
+
+        .colorful-confirm-button {
+            background-color: #27ae60;
+            color: #ffffff;
+        }
+
+        .colorful-footer {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+        .awc-ci{
+            background-color: #EFEFEF;
+            padding: 15px 10px;
+        }
+    </style>
+@endsection
 @section('content')
     <!-- breadcrumb-section -->
     <div class="breadcrumb-section breadcrumb-bg">
@@ -15,7 +59,7 @@
         </div>
     </div>
     <!-- end breadcrumb section -->
-
+    @include('flash');
     <!-- cart -->
     <div class="cart-section mt-150 mb-150">
         <div class="container">
@@ -69,7 +113,7 @@
                         </div> --}}
                     </div>
 
-                    <div class="coupon-section">
+                    {{-- <div class="coupon-section">
                         <h3>Apply Coupon</h3>
                         <div class="coupon-form-wrap">
                             <form action="">
@@ -77,25 +121,28 @@
                                 <p><input type="submit" value="Apply"></p>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="col-lg-5">
 
                     <div class="card-header">
 
-                        <div class="">Customer Information</div>
+                        <div class="awc-ci">Customer Information</div>
                     </div>
                     <div class="card-body">
                         <div class="billing-address-form">
                             <form action="">
-                                <p><input id="billname" type="text" placeholder="Name"></p>
-                                <p><input id="billemail" type="email" placeholder="Email"></p>
-                                <p><input id="billBaddress" type="text" placeholder="Billing Address"></p>
-                                <p><input id="billSaddress" type="text" placeholder="Shipping Address"></p>
-                                <p><input id="billphone" type="tel" placeholder="Phone"></p>
+                                <p><input class="form-control" id="billname" type="text" placeholder="Name"></p>
+                                <p><input class="form-control" id="billemail" type="email" placeholder="Email"></p>
+                                <p><input class="form-control" id="billBaddress" type="text"
+                                        placeholder="Billing Address"></p>
+                                <p><input class="form-control" id="billSaddress" type="text"
+                                        placeholder="Shipping Address"></p>
+                                <p><input class="form-control" id="billphone" type="tel" placeholder="Phone"></p>
                                 <p>
-                                    <textarea name="billmessage" id="billmessage" cols="30" rows="10" placeholder="Say Something"></textarea>
+                                    <textarea class="form-control" name="billmessage" id="billmessage" cols="30" rows="10"
+                                        placeholder="Say Something"></textarea>
                                 </p>
                             </form>
                         </div>
@@ -112,7 +159,28 @@
 
     <script>
         $(document).ready(function() {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $('#placeOrder').click(function() {
+                // Validate Name field
+                var isNameValid = validateField($('#billname'), 'Name is required');
+
+                // Validate Email field
+                var isEmailValid = validateField($('#billemail'), 'Invalid email format',
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+
+                // Validate Billing Address field
+                var isBAddressValid = validateField($('#billBaddress'), 'Address is required');
+
+                // Validate Shipping Address field
+                var isSAddressValid = validateField($('#billSaddress'), 'Address is required');
+
+                // Validate Phone field
+                var isPhoneValid = validateField($('#billphone'),
+                    'The phone number must start with 01 and have a length of 11 characters.',
+                    /^01\d{9}$/);
+
+
+
                 // Collect customer information
                 var billname = $('#billname').val();
                 var billemail = $('#billemail').val();
@@ -120,6 +188,37 @@
                 var billSaddress = $('#billSaddress').val();
                 var billphone = $('#billphone').val();
                 var billmessage = $('#billmessage').val();
+
+                // Validate if any field is empty
+                // Check if any field is empty or has validation errors
+                console.log(isEmailValid);
+                if (!isNameValid || !isEmailValid || !isBAddressValid || !isSAddressValid || !
+                    isPhoneValid) {
+
+                    Swal.fire({
+                        // icon: 'error',
+                        title: 'Error Placing Order',
+                        text: 'Please fill in all required fields',
+                        confirmButtonText: 'OK',
+                        // imageUrl: 'https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg',
+                        imageUrl: "{{asset('alert/close.png')}}",
+                        imageWidth: 100,
+                        imageHeight: 100,
+                        background: "#fff asset('alert/close.png')",
+                        // background: '#fff url(https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg)',
+                        customClass: {
+                            popup: 'colorful-popup',
+                            header: 'colorful-header',
+                            title: 'colorful-title',
+                            closeButton: 'colorful-close-button',
+                            icon: 'colorful-icon',
+                            content: 'colorful-content',
+                            confirmButton: 'colorful-confirm-button',
+                            footer: 'colorful-footer'
+                        }
+                    });
+                    return;
+                }
 
                 // Collect cart details
                 var cartDetails = [];
@@ -138,38 +237,115 @@
                 // Calculate subtotal
                 var subtotal = parseFloat($('#totalAmount').text());
 
-                // Additional details like shipping can be added as needed
-
                 // Prepare data to send to the server
                 var orderData = {
-                    customer: {
-                        name: billname,
-                        email: billemail,
-                        billingAddress: billBaddress,
-                        shippingAddress: billSaddress,
-                        phone: billphone,
-                        message: billmessage
-                    },
+                    _token: csrfToken,
+                    customer_name: billname,
+                    customer_email: billemail,
+                    billing_address: billBaddress,
+                    shipping_address: billSaddress,
+                    phone: billphone,
+                    message: billmessage,
                     cartDetails: cartDetails,
                     subtotal: subtotal
                     // Add more fields as needed
                 };
-
+                console.log(orderData.cartDetails.length);
+                if (orderData.cartDetails.length === 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No cart Product available',
+                        text: 'Please Add Product To Cart First',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'colorful-popup',
+                            header: 'colorful-header',
+                            title: 'colorful-title',
+                            closeButton: 'colorful-close-button',
+                            icon: 'colorful-icon',
+                            content: 'colorful-content',
+                            confirmButton: 'colorful-confirm-button',
+                            footer: 'colorful-footer'
+                        }
+                    });
+                    return;
+                }
                 // Send data to the server using AJAX
                 $.ajax({
                     url: "{{ url('place-order') }}", // Replace with your actual route
                     method: 'POST',
                     data: orderData,
                     success: function(response) {
-                        // Handle success (e.g., show a success message)
-                        console.log(response);
+                        // Handle success with SweetAlert2
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Order Placed Successfully!',
+                            text: 'Thank you for your order.',
+                            confirmButtonText: 'OK'
+                        });
                     },
-                    error: function(error) {
-                        // Handle error (e.g., show an error message)
-                        console.error('Error placing order:', error);
+                    error: function(xhr, status, error) {
+                        // Handle error with SweetAlert2
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            // If there are validation errors
+                            var errorMessage = '';
+                            $.each(xhr.responseJSON.errors, function(field, errors) {
+                                errorMessage += errors[0] + '<br>';
+                            });
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error Placing Order',
+                                text: 'Please fix the following errors:',
+                                html: errorMessage,
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            // For general errors
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error Placing Order',
+                                text: 'Please try again later.' + error,
+                                confirmButtonText: 'OK'
+                            });
+                        }
                     }
                 });
             });
+
+            // Function to validate a field
+            function validateField(element, errorMessage, regex) {
+                var value = element.val();
+                if (regex && !regex.test(value) || !value.trim()) {
+                    showValidationError(element, errorMessage);
+                    return false;
+                } else {
+                    clearValidationError(element);
+                    return true;
+                }
+            }
+
+            // Function to show validation error
+            function showValidationError(element, errorMessage) {
+                element.css('border-color', 'red');
+                // Create or update a span element to display the error message
+                var errorSpan = element.next('.validation-error');
+                if (!errorSpan.length) {
+                    errorSpan = $('<span class="validation-error "></span>').css({
+                        'font-size': '12px',
+                        'color': 'red'
+                    });
+                    element.after(errorSpan);
+                }
+                errorSpan.text(errorMessage);
+            }
+
+            // Function to clear validation error
+            function clearValidationError(element) {
+                element.css('border-color', ''); // Reset border color
+                // Remove the error message span
+                element.next('.validation-error').remove();
+            }
+
             var cart = JSON.parse(sessionStorage.getItem('cart')) || [];
             var data;
 

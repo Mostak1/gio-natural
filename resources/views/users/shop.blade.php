@@ -22,20 +22,21 @@
         <div class="container">
             {{-- <div id="product-list" class="row product-lists"></div> --}}
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-12">
                     <div class="product-filters">
-                        {{-- <ul>
+                         <ul>
                             <li class="active" data-filter="*">All</li>
                             <li data-filter=".strawberry">Strawberry</li>
                             <li data-filter=".berry">Berry</li>
                             <li data-filter=".lemon">Lemon</li>
-                        </ul> --}}
+                        </ul>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="product-lists">
+            <div class="">
+                <div class="text-center fs-1 fw-bold">All Products</div>
                 <div class="row" id="productContainer">
 
                 </div>

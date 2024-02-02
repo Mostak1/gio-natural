@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +24,10 @@ Route::get('shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('news', [HomeController::class, 'news'])->name('news');
 Route::get('cart', [HomeController::class, 'cart'])->name('cart');
-Route::post('/submit-contact-form', [HomeController::class, 'submitContactForm'])->name('contactForm');
+Route::post('submit-contact-form', [HomeController::class, 'submitContactForm'])->name('contactForm');
 Route::get('productjson', [ProductController::class, 'productJson']);
+Route::post('place-order', [OrderController::class, 'placeOrder'])->name('place-order');
+
 Route::resources([
     // 'category' => CategoryController::class,
     'product' => ProductController::class,
