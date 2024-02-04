@@ -41,6 +41,7 @@
 @yield('content')
 
 {{-- footer --}}
+@include('flash')
 @include('users.layouts.footer')
 
 	<!-- jquery -->

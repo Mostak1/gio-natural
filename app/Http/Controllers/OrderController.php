@@ -28,18 +28,11 @@ class OrderController extends Controller
             'subtotal' => 'required|numeric',
             // Add more validation rules as needed
         ]);
-
-        // // Check if validation fails
-        // if ($validator->fails()) {
-        //     throw ValidationException::withMessages($validator->errors()->toArray());
-        // }
+        
         if ($validator->fails()) {
             // Return a JSON response with validation errors
             return response()->json(['errors' => $validator->errors()->toArray()], 422);
         }
-
-        // Create a new order
-        // Start a database transaction
         DB::beginTransaction();
 
         try {
@@ -60,10 +53,7 @@ class OrderController extends Controller
                 $orderDetail->save();
             }
 
-            // Save the order details
-            // $order->orderDetails()->saveMany($orderDetails);
-
-            // Commit the transaction
+           
             DB::commit();
 
             // Return a success response

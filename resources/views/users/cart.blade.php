@@ -38,9 +38,31 @@
             background-color: #3498db;
             color: #ffffff;
         }
-        .awc-ci{
+
+        .awc-ci {
             background-color: #EFEFEF;
             padding: 15px 10px;
+        }
+
+        button.boxed-btn {
+            font-family: 'Poppins', sans-serif;
+            display: inline-block;
+            border: 0px;
+            border-radius: 20px;
+            background-color: #F28123;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        button.boxed-btn {
+            -webkit-transition: 0.3s;
+            -o-transition: 0.3s;
+            transition: 0.3s;
+        }
+
+        button.boxed-btn:hover {
+            background-color: #051922;
+            color: #F28123;
         }
     </style>
 @endsection
@@ -53,6 +75,10 @@
                     <div class="breadcrumb-text">
                         <p>Fresh and Organic</p>
                         <h1>Cart</h1>
+                        <form action="{{ route('checkout') }}" method="post">
+                            @csrf
+                            <button style="padding: 10px 20px; margin: 10px; border: 1px solid black;">Pay Now</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -86,7 +112,7 @@
                     <div class="total-section">
                         <table class="total-table">
                             <thead class="total-table-head">
-                                <hr class="border border-danger border-2 opacity-50">
+                                <hr class="border-danger border-2 opacity-50">
                                 {{-- <tr class="table-total-row">
                                     <th>Total</th>
                                     <th>Price</th>
@@ -132,22 +158,24 @@
                     </div>
                     <div class="card-body">
                         <div class="billing-address-form">
-                            <form action="">
-                                <p><input class="form-control" id="billname" type="text" placeholder="Name"></p>
-                                <p><input class="form-control" id="billemail" type="email" placeholder="Email"></p>
-                                <p><input class="form-control" id="billBaddress" type="text"
+                            <form action="{{ route('checkout') }}" method="post">
+                                @csrf
+                                <p><input name="customer_name" class="form-control" id="billname" type="text" placeholder="Name"></p>
+                                <p><input name="customer_email" class="form-control" id="billemail" type="email" placeholder="Email"></p>
+                                <p><input name="billing_address" class="form-control" id="billBaddress" type="text"
                                         placeholder="Billing Address"></p>
-                                <p><input class="form-control" id="billSaddress" type="text"
+                                <p><input name="shipping_address" class="form-control" id="billSaddress" type="text"
                                         placeholder="Shipping Address"></p>
-                                <p><input class="form-control" id="billphone" type="tel" placeholder="Phone"></p>
+                                <p><input name="phone" class="form-control" id="billphone" type="tel" placeholder="Phone"></p>
                                 <p>
-                                    <textarea class="form-control" name="billmessage" id="billmessage" cols="30" rows="10"
+                                    <textarea class="form-control" name="message" id="billmessage" cols="30" rows="10"
                                         placeholder="Say Something"></textarea>
                                 </p>
+                                <button type="submit" class="boxed-btn" id="placeOrder"> Place
+                                        Order</button>
                             </form>
                         </div>
                     </div>
-                    <a class="boxed-btn" id="placeOrder">Place Order</a>
                 </div>
             </div>
         </div>
@@ -192,33 +220,33 @@
                 // Validate if any field is empty
                 // Check if any field is empty or has validation errors
                 console.log(isEmailValid);
-                if (!isNameValid || !isEmailValid || !isBAddressValid || !isSAddressValid || !
-                    isPhoneValid) {
+                // if (!isNameValid || !isEmailValid || !isBAddressValid || !isSAddressValid || !
+                //     isPhoneValid) {
 
-                    Swal.fire({
-                        // icon: 'error',
-                        title: 'Error Placing Order',
-                        text: 'Please fill in all required fields',
-                        confirmButtonText: 'OK',
-                        // imageUrl: 'https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg',
-                        imageUrl: "{{asset('alert/close.png')}}",
-                        imageWidth: 100,
-                        imageHeight: 100,
-                        background: "#fff asset('alert/close.png')",
-                        // background: '#fff url(https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg)',
-                        customClass: {
-                            popup: 'colorful-popup',
-                            header: 'colorful-header',
-                            title: 'colorful-title',
-                            closeButton: 'colorful-close-button',
-                            icon: 'colorful-icon',
-                            content: 'colorful-content',
-                            confirmButton: 'colorful-confirm-button',
-                            footer: 'colorful-footer'
-                        }
-                    });
-                    return;
-                }
+                //     Swal.fire({
+                //         // icon: 'error',
+                //         title: 'Error Placing Order',
+                //         text: 'Please fill in all required fields',
+                //         confirmButtonText: 'OK',
+                //         // imageUrl: 'https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg',
+                //         imageUrl: "{{ asset('alert/close.png') }}",
+                //         imageWidth: 100,
+                //         imageHeight: 100,
+                //         background: "#fff asset('alert/close.png')",
+                //         // background: '#fff url(https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg)',
+                //         customClass: {
+                //             popup: 'colorful-popup',
+                //             header: 'colorful-header',
+                //             title: 'colorful-title',
+                //             closeButton: 'colorful-close-button',
+                //             icon: 'colorful-icon',
+                //             content: 'colorful-content',
+                //             confirmButton: 'colorful-confirm-button',
+                //             footer: 'colorful-footer'
+                //         }
+                //     });
+                //     return;
+                // }
 
                 // Collect cart details
                 var cartDetails = [];
@@ -239,7 +267,7 @@
 
                 // Prepare data to send to the server
                 var orderData = {
-                    _token: csrfToken,
+
                     customer_name: billname,
                     customer_email: billemail,
                     billing_address: billBaddress,
@@ -248,7 +276,6 @@
                     message: billmessage,
                     cartDetails: cartDetails,
                     subtotal: subtotal
-                    // Add more fields as needed
                 };
                 console.log(orderData.cartDetails.length);
                 if (orderData.cartDetails.length === 0) {
@@ -271,45 +298,49 @@
                     return;
                 }
                 // Send data to the server using AJAX
-                $.ajax({
-                    url: "{{ url('place-order') }}", // Replace with your actual route
-                    method: 'POST',
-                    data: orderData,
-                    success: function(response) {
-                        // Handle success with SweetAlert2
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Order Placed Successfully!',
-                            text: 'Thank you for your order.',
-                            confirmButtonText: 'OK'
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error with SweetAlert2
-                        if (xhr.responseJSON && xhr.responseJSON.errors) {
-                            // If there are validation errors
-                            var errorMessage = '';
-                            $.each(xhr.responseJSON.errors, function(field, errors) {
-                                errorMessage += errors[0] + '<br>';
-                            });
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error Placing Order',
-                                text: 'Please fix the following errors:',
-                                html: errorMessage,
-                                confirmButtonText: 'OK'
-                            });
-                        } else {
-                            // For general errors
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error Placing Order',
-                                text: 'Please try again later.' + error,
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    }
-                });
+                // $.ajax({
+                //     _token: csrfToken,
+                //     url: "{{ route('checkout') }}",
+                //     method: 'POST',
+                //     data: {
+                //         _token: csrfToken, // Include the CSRF token here
+                //         orderData: orderData, // Include your other data here
+                //     },
+                //     success: function(response) {
+                //         // Handle success with SweetAlert2
+                //         Swal.fire({
+                //             icon: 'success',
+                //             title: 'Order Placed Successfully!',
+                //             text: 'Thank you for your order.',
+                //             confirmButtonText: 'OK'
+                //         });
+                //     },
+                //     error: function(xhr, status, error) {
+                //         // Handle error with SweetAlert2
+                //         if (xhr.responseJSON && xhr.responseJSON.errors) {
+                //             // If there are validation errors
+                //             var errorMessage = '';
+                //             $.each(xhr.responseJSON.errors, function(field, errors) {
+                //                 errorMessage += errors[0] + '<br>';
+                //             });
+                //             Swal.fire({
+                //                 icon: 'error',
+                //                 title: 'Error Placing Order',
+                //                 text: 'Please fix the following errors:',
+                //                 html: errorMessage,
+                //                 confirmButtonText: 'OK'
+                //             });
+                //         } else {
+                //             // For general errors
+                //             Swal.fire({
+                //                 icon: 'error',
+                //                 title: 'Error Placing Order',
+                //                 text: 'Please try again later.' + error,
+                //                 confirmButtonText: 'OK'
+                //             });
+                //         }
+                //     }
+                // });
             });
 
             // Function to validate a field

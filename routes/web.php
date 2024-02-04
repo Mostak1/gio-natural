@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +17,9 @@ use App\Http\Controllers\PaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//paystation original route
+Route::post('checkout',[CheckoutController::class,'checkout'])->name('checkout');
+Route::get('store-transaction/{token}',[CheckoutController::class,'storeTransaction'])->name('store-transaction');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('about', [HomeController::class, 'about'])->name('about');
@@ -27,12 +30,7 @@ Route::get('cart', [HomeController::class, 'cart'])->name('cart');
 Route::post('submit-contact-form', [HomeController::class, 'submitContactForm'])->name('contactForm');
 Route::get('productjson', [ProductController::class, 'productJson']);
 Route::post('place-order', [OrderController::class, 'placeOrder'])->name('place-order');
-Route::get('generate-token', [PaymentController::class, 'showGenerateTokenView']);
-Route::get('create-payment', [PaymentController::class, 'showCreatePaymentView']);
 
-
-Route::get('/generate-token', [PaymentController::class, 'generateToken']);
-Route::post('/create-payment', [PaymentController::class, 'createPayment']);
 
 Route::resources([
     // 'category' => CategoryController::class,
