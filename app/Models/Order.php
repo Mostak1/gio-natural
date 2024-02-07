@@ -17,5 +17,7 @@ class Order extends Model
         'phone',
         'message',
         'subtotal',
+        'invoice_number',
+        'status',
     ];
 }

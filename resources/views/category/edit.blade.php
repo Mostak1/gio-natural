@@ -1,4 +1,7 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
+    
+
     <div class="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
         <div class="flex justify-between">
             <h2 class="text-2xl font-semibold mb-6">Edit Category</h2>
@@ -36,4 +39,4 @@
             </div>
         </form>
     </div>
-</x-app-layout>
+@endsection

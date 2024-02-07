@@ -1,4 +1,7 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
+    
+
     <div class="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
         <div class="flex justify-between">
             <h2 class="text-2xl font-semibold mb-6">Edit Product</h2>
@@ -26,6 +29,16 @@
                     <label for="stock" class="block text-sm font-medium text-gray-600">Initial Stock</label>
                     <input type="stock" name="stock" id="stock" class="mt-1 p-2 w-full border rounded-md"
                         value="{{ old('stock', $product->stock) }}" required>
+                </div>
+                <div class="">
+                    <label for="weight" class="block text-sm font-medium text-gray-600">Weight</label>
+                    <input type="text" name="weight" id="weight" class="mt-1 p-2 w-full border rounded-md"
+                        value="{{ old('weight', $product->weight) }}" required>
+                </div>
+                <div class="">
+                    <label for="unit" class="block text-sm font-medium text-gray-600">Unit</label>
+                    <input type="text" name="unit" id="unit" class="mt-1 p-2 w-full border rounded-md"
+                        value="{{ old('unit',$product->unit) }}" required>
                 </div>
                 <div class="">
                     <label for="category_id" class="block text-sm font-medium text-gray-600">Category</label>
@@ -56,4 +69,4 @@
             </div>
         </form>
     </div>
-</x-app-layout>
+    @endsection

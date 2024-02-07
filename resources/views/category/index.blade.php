@@ -1,4 +1,10 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('header')
+
+@endsection
+@section('content')
+    
+
     <div class="container mx-auto">
 
 
@@ -10,11 +16,14 @@
     </div>
     @include('flash')
     <div class="my-4 text-center">
-        {{ $categories->onEachSide(1)->links() }}
+        {{-- {{ $categories->onEachSide(1)->links() }} --}}
     </div>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div class="relative overflow-x-auto shadow-xl sm:rounded-xl ">
+            <table id="dataTable" class="w-full text-sm text-left rtl:text-right text-teal-500 dark:text-teal-400 my-10">
+                <thead class="text-xs text-gray-700 uppercase bg-teal-50 dark:bg-teal-200 dark:text-teal-400">
+                    <tr>
+                        <th colspan="3" class="tablebtn"></th>
+                    </tr>
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Category Name
@@ -61,10 +70,14 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="my-4">
-                {{ $categories->onEachSide(1)->links() }}
-            </div>
             
         </div>
+        <div class="my-8">
+            {{-- {{ $categories->onEachSide(1)->links() }} --}}
+        </div>
     </div>
-</x-app-layout>
+@endsection
+@section('footer')
+
+
+@endsection

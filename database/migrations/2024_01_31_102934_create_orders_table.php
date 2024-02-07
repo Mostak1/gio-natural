@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('shipping_address');
             $table->string('phone');
             $table->text('message')->nullable();
+            $table->text('invoice_number')->unique();
             $table->decimal('subtotal', 10, 2);
+            $table->text('trx_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

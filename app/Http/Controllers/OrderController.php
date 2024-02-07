@@ -23,10 +23,10 @@ class OrderController extends Controller
             'customer_email' => 'required',
             'billing_address' => 'required|string',
             'shipping_address' => 'required|string',
-            'phone' => 'required|string|unique:orders,phone',
+            'phone' => 'required|string',
             'message' => 'nullable|string',
             'subtotal' => 'required|numeric',
-            // Add more validation rules as needed
+            'invoice_number' => 'required|string|unique:orders,invoice_number',
         ]);
         
         if ($validator->fails()) {
@@ -57,7 +57,7 @@ class OrderController extends Controller
             DB::commit();
 
             // Return a success response
-            return response()->json(['success' => 'Order placed successfully', 'order' => $order], 200);
+            return response()->json(['success' => 'Order placed successfully'], 200);
         } catch (\Exception $e) {
             // An error occurred, rollback the transaction
             DB::rollback();

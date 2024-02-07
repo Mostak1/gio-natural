@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container mx-auto">
 
 
@@ -10,11 +11,14 @@
         </div>
         @include('flash')
         <div class="my-4 text-center">
-            {{ $products->onEachSide(1)->links() }}
+            {{-- {{ $products->onEachSide(1)->links() }} --}}
         </div>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table id="dataTable" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th colspan="8" class="tablebtn"></th>
+                    </tr>
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Product name
@@ -30,6 +34,12 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Weight
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Unit
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Action
@@ -57,6 +67,12 @@
                             <td class="px-6 py-4">
                                 {{ $item->price }}
                             </td>
+                            <td class="px-6 py-4">
+                                {{ $item->weight }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->unit }}
+                            </td>
                             <td class="px-6 py-4 flex">
 
                                 <a href="{{ url('product/' . $item->id . '/edit') }}"
@@ -73,13 +89,13 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="my-4">
-                {{ $products->onEachSide(1)->links('pagination.custom') }}
+        </div>
+        <div class="my-4">
+            {{-- {{ $products->onEachSide(1)->links('pagination.custom') }} --}}
 
 
 
-            </div>
 
         </div>
     </div>
-</x-app-layout>
+@endsection

@@ -75,10 +75,10 @@
                     <div class="breadcrumb-text">
                         <p>Fresh and Organic</p>
                         <h1>Cart</h1>
-                        <form action="{{ route('checkout') }}" method="post">
+                        {{-- <form action="{{ route('checkout') }}" method="post">
                             @csrf
                             <button style="padding: 10px 20px; margin: 10px; border: 1px solid black;">Pay Now</button>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>
@@ -158,21 +158,27 @@
                     </div>
                     <div class="card-body">
                         <div class="billing-address-form">
-                            <form action="{{ route('checkout') }}" method="post">
+                            <form id="placeOrder" action="{{ route('checkout') }}" method="post">
+                                {{-- {{ route('checkout') }} --}}
                                 @csrf
-                                <p><input name="customer_name" class="form-control" id="billname" type="text" placeholder="Name"></p>
-                                <p><input name="customer_email" class="form-control" id="billemail" type="email" placeholder="Email"></p>
+                                <p><input name="customer_name" class="form-control" id="billname" type="text"
+                                        placeholder="Name"></p>
+                                <p><input name="customer_email" class="form-control" id="billemail" type="email"
+                                        placeholder="Email"></p>
                                 <p><input name="billing_address" class="form-control" id="billBaddress" type="text"
                                         placeholder="Billing Address"></p>
                                 <p><input name="shipping_address" class="form-control" id="billSaddress" type="text"
                                         placeholder="Shipping Address"></p>
-                                <p><input name="phone" class="form-control" id="billphone" type="tel" placeholder="Phone"></p>
+                                <p><input name="phone" class="form-control" id="billphone" type="tel"
+                                        placeholder="Phone"></p>
                                 <p>
                                     <textarea class="form-control" name="message" id="billmessage" cols="30" rows="10"
                                         placeholder="Say Something"></textarea>
                                 </p>
-                                <button type="submit" class="boxed-btn" id="placeOrder"> Place
-                                        Order</button>
+                                <input type="text" name="invoice_number" id="invoice_number" hidden>
+                                <input type="text" name="total" id="subTotalInput" hidden>
+                                <button type="submit" class="boxed-btn"> Place
+                                    Order</button>
                             </form>
                         </div>
                     </div>
@@ -188,7 +194,8 @@
     <script>
         $(document).ready(function() {
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            $('#placeOrder').click(function() {
+            $('#placeOrder').submit(function(e) {
+                e.preventDefault();
                 // Validate Name field
                 var isNameValid = validateField($('#billname'), 'Name is required');
 
@@ -216,37 +223,37 @@
                 var billSaddress = $('#billSaddress').val();
                 var billphone = $('#billphone').val();
                 var billmessage = $('#billmessage').val();
-
+                var invoice_number = $('#invoice_number').val();
                 // Validate if any field is empty
                 // Check if any field is empty or has validation errors
                 console.log(isEmailValid);
-                // if (!isNameValid || !isEmailValid || !isBAddressValid || !isSAddressValid || !
-                //     isPhoneValid) {
+                if (!isNameValid || !isEmailValid || !isBAddressValid || !isSAddressValid || !
+                    isPhoneValid) {
 
-                //     Swal.fire({
-                //         // icon: 'error',
-                //         title: 'Error Placing Order',
-                //         text: 'Please fill in all required fields',
-                //         confirmButtonText: 'OK',
-                //         // imageUrl: 'https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg',
-                //         imageUrl: "{{ asset('alert/close.png') }}",
-                //         imageWidth: 100,
-                //         imageHeight: 100,
-                //         background: "#fff asset('alert/close.png')",
-                //         // background: '#fff url(https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg)',
-                //         customClass: {
-                //             popup: 'colorful-popup',
-                //             header: 'colorful-header',
-                //             title: 'colorful-title',
-                //             closeButton: 'colorful-close-button',
-                //             icon: 'colorful-icon',
-                //             content: 'colorful-content',
-                //             confirmButton: 'colorful-confirm-button',
-                //             footer: 'colorful-footer'
-                //         }
-                //     });
-                //     return;
-                // }
+                    Swal.fire({
+                        // icon: 'error',
+                        title: 'Error Placing Order',
+                        text: 'Please fill in all required fields',
+                        confirmButtonText: 'OK',
+                        // imageUrl: 'https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg',
+                        imageUrl: "{{ asset('alert/close.png') }}",
+                        imageWidth: 100,
+                        imageHeight: 100,
+                        background: "#fff asset('alert/close.png')",
+                        // background: '#fff url(https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg)',
+                        customClass: {
+                            popup: 'colorful-popup',
+                            header: 'colorful-header',
+                            title: 'colorful-title',
+                            closeButton: 'colorful-close-button',
+                            icon: 'colorful-icon',
+                            content: 'colorful-content',
+                            confirmButton: 'colorful-confirm-button',
+                            footer: 'colorful-footer'
+                        }
+                    });
+                    return;
+                }
 
                 // Collect cart details
                 var cartDetails = [];
@@ -267,7 +274,7 @@
 
                 // Prepare data to send to the server
                 var orderData = {
-
+                    _token: '{{ csrf_token() }}',
                     customer_name: billname,
                     customer_email: billemail,
                     billing_address: billBaddress,
@@ -275,7 +282,8 @@
                     phone: billphone,
                     message: billmessage,
                     cartDetails: cartDetails,
-                    subtotal: subtotal
+                    subtotal: subtotal,
+                    invoice_number: invoice_number
                 };
                 console.log(orderData.cartDetails.length);
                 if (orderData.cartDetails.length === 0) {
@@ -298,49 +306,51 @@
                     return;
                 }
                 // Send data to the server using AJAX
-                // $.ajax({
-                //     _token: csrfToken,
-                //     url: "{{ route('checkout') }}",
-                //     method: 'POST',
-                //     data: {
-                //         _token: csrfToken, // Include the CSRF token here
-                //         orderData: orderData, // Include your other data here
-                //     },
-                //     success: function(response) {
-                //         // Handle success with SweetAlert2
-                //         Swal.fire({
-                //             icon: 'success',
-                //             title: 'Order Placed Successfully!',
-                //             text: 'Thank you for your order.',
-                //             confirmButtonText: 'OK'
-                //         });
-                //     },
-                //     error: function(xhr, status, error) {
-                //         // Handle error with SweetAlert2
-                //         if (xhr.responseJSON && xhr.responseJSON.errors) {
-                //             // If there are validation errors
-                //             var errorMessage = '';
-                //             $.each(xhr.responseJSON.errors, function(field, errors) {
-                //                 errorMessage += errors[0] + '<br>';
-                //             });
-                //             Swal.fire({
-                //                 icon: 'error',
-                //                 title: 'Error Placing Order',
-                //                 text: 'Please fix the following errors:',
-                //                 html: errorMessage,
-                //                 confirmButtonText: 'OK'
-                //             });
-                //         } else {
-                //             // For general errors
-                //             Swal.fire({
-                //                 icon: 'error',
-                //                 title: 'Error Placing Order',
-                //                 text: 'Please try again later.' + error,
-                //                 confirmButtonText: 'OK'
-                //             });
-                //         }
-                //     }
-                // });
+                $.ajax({
+                    url: "{{ route('place-order') }}",
+                    method: 'POST',
+                    data:  orderData, // Include your other data here
+                    success: function(response) {
+                        // Handle success with SweetAlert2
+                        $('#placeOrder').unbind('submit').submit();
+                            // Swal.fire({
+                            //     icon: 'info',
+                            //     title: 'Order Not Placed Successfully!',
+                            //     text: ' ' + response,
+                            //     confirmButtonText: 'OK'
+                            // });
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error with SweetAlert2
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            // If there are validation errors
+                            var errorMessage = '';
+                            $.each(xhr.responseJSON.errors, function(field, errors) {
+                                errorMessage += errors[0] + '<br>';
+                            });
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error Placing Order',
+                                text: 'Please fix the following errors:',
+                                html: errorMessage,
+                                confirmButtonText: 'OK'
+                            });
+                            return;
+                        } else {
+                            // For general errors
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error Placing Order',
+                                text: 'Please try again later.' + error,
+                                confirmButtonText: 'OK'
+                            });
+                            return;
+                        }
+                        return;
+                    }
+                });
+                // $('#placeOrder').unbind('submit').submit();
             });
 
             // Function to validate a field
@@ -470,8 +480,27 @@
                     $(this).find('.product-total').text(itemTotal.toFixed(2) + ' TK');
                 });
                 // Update the total in your UI (replace '#totalAmount' with the actual selector)
+                function generateReference() {
+                    var now = new Date();
+                    var day = now.getDate().toString().padStart(2, '0'); // Day of the month (01 to 31)
+                    var month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month (01 to 12)
+                    var year = now.getFullYear().toString(); // Year (e.g., 2024)
+                    var hour = now.getHours().toString().padStart(2, '0'); // Hour (00 to 23)
+                    var minute = now.getMinutes().toString().padStart(2, '0'); // Minute (00 to 59)
+                    var second = now.getSeconds().toString().padStart(2, '0'); // Second (00 to 59)
+
+                    var reference = 'GIO' + day + month + year + Math.floor(Math.random() * (999 - 111 + 1) + 111) +
+                        hour + minute + second;
+
+                    console.log(reference);
+                    return reference;
+                }
+                var reference = generateReference();
                 $('#totalAmount').text(total.toFixed(2));
                 $('#subTotal').text(subtotal.toFixed(2));
+                $('#subTotalInput').val(subtotal.toFixed(2));
+                $('#invoice_number').val(reference);
+
             }
         });
     </script>

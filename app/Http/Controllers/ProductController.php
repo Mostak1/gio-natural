@@ -18,7 +18,7 @@ class ProductController extends Controller
     {
         $products = Product::with('category')
             ->orderBy('id', 'DESC')
-            ->paginate(10);
+            ->get();
         return view('product.index', compact('products'));
     }
     public function productJson()
@@ -45,8 +45,10 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:10',
+            'stock' => 'required|integer|min:2',
+            'weight' => 'required',
+            'unit' => 'required',
             'category_id' => 'required|exists:categories,id',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -96,6 +98,8 @@ class ProductController extends Controller
                 'description' => 'nullable|string',
                 'price' => 'required|numeric|min:0',
                 'stock' => 'required|integer|min:0',
+                'weight' => 'required',
+                'unit' => 'required',
                 'category_id' => 'required|exists:categories,id',
                 'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
@@ -106,6 +110,8 @@ class ProductController extends Controller
                 'description' => $validatedData['description'],
                 'price' => $validatedData['price'],
                 'stock' => $validatedData['stock'],
+                'weight' => $validatedData['weight'],
+                'unit' => $validatedData['unit'],
                 'category_id' => $validatedData['category_id'],
             ]);
 

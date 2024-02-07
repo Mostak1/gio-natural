@@ -18,6 +18,8 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->decimal('discountPercentage', 5, 2);
             $table->decimal('rating', 3, 2);
+            $table->decimal('weight', 10, 2);
+            $table->string('unit');
             $table->integer('stock');
             $table->string('brand');
             $table->bigInteger('category_id')->unsigned()->nullable();

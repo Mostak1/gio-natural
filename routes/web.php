@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 //paystation original route
 Route::post('checkout',[CheckoutController::class,'checkout'])->name('checkout');
 Route::get('store-transaction/{token}',[CheckoutController::class,'storeTransaction'])->name('store-transaction');
+// Route::post('store-transaction',[CheckoutController::class,'storeTransaction'])->name('store-transaction');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('about', [HomeController::class, 'about'])->name('about');
