@@ -107,7 +107,7 @@ class CheckoutController extends Controller
 
         if ($request->trx_id == null) {
             //redirect to cart page or dashboard page
-            return redirect()->back()->with('error', 'Order Tranjection Cancelled');
+            return redirect()->route('cart')->with('error', 'Order Tranjection Cancelled');
         }
 
         //get transaction information
@@ -135,21 +135,22 @@ class CheckoutController extends Controller
 
         if ($response['data']['trx_status'] == 'Failed' && $response['data']['trx_id'] == null) {
             //redirect to cart page or dashboard page
-            return redirect()->back()->with('error', 'Order Tranjection failed');
+            return redirect()->route('cart')->with('error', 'Order Tranjection failed');
         }
         $order = Order::where('invoice_number', $request->invoice_number)->first();
         if (!$order) {
             // Handle the case where the order with the provided invoice number is not found
-            return redirect()->back()->with('error', 'Order not found');
+            return redirect()->route('cart')->with('error', 'Order not found');
         }
 
         // Update the trx_id column of the order
         $order->trx_id = $request->trx_id;
+        $order->status = 'Received';
 
         // Save the changes to the database
         $order->save();
         //Store Transaction Information and redirect to success page
         echo 'store payment transaction';
-        return redirect()->back()->with('success', 'Order placed and paid successfully, Thank You');
+        return redirect()->route('cart')->with('success', 'Order placed and paid successfully, Thank You');
     }
 }

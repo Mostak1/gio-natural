@@ -19,5 +19,6 @@ class Order extends Model
         'subtotal',
         'invoice_number',
         'status',
+        'modified_by',
     ];
 }

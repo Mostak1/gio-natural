@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -20,6 +20,9 @@ Category
                     </x-nav-link>
                     <x-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
 Product
+                    </x-nav-link>
+                    <x-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')">
+Order
                     </x-nav-link>
                 </div>
             </div>

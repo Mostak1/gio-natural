@@ -270,7 +270,7 @@
                 });
 
                 // Calculate subtotal
-                var subtotal = parseFloat($('#totalAmount').text());
+                var subtotal = parseFloat($('#subTotal').text());
 
                 // Prepare data to send to the server
                 var orderData = {
@@ -428,7 +428,7 @@
                             '<td class="product-image"><img src="{{ asset('storage/') }}/' + product
                             .thumbnail +
                             '" alt="Product Image" height="50px"></td>' +
-                            '<td class="product-name">' + product.title + '</td>' +
+                            '<td class="product-name">' + product.title + '('+product.weight + product.unit+')</td>' +
                             '<td class="product-price">' + product.price + ' TK</td>' +
                             '<td class="product-quantity"><input type="number" class="quantity-input" value="1" min="1"></td>' +
                             '<td class="product-total">' + product.price + ' TK</td>' +

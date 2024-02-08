@@ -69,15 +69,16 @@ class HomeController extends Controller
             'email' => 'required|email',
             'phone' => 'required|string',
             'subject' => 'required|string',
-            'message' => 'required|string',
+            'comment' => 'required|string',
         ]);
         $name = $request->name;
         $email = $request->email;
         $phone = $request->phone;
         $subject = $request->subject;
-        $message = $request->message;
+        $message = $request->comment;
         // Send email to the specified email address
     //    $mail= Mail::to(users: 'acrh.mostak@gmail.com')->send(new ContactFormMail($name, $email, $phone, $subject, $message));
+    //    $mail= Mail::to(users: 'gionaturals.rakib@gmail.com')->send(new ContactFormMail($validatedData));
        $mail= Mail::to(users: 'acrh.mostak@gmail.com')->send(new ContactFormMail($validatedData));
 
         if ($mail) {

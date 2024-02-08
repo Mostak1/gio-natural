@@ -45,15 +45,15 @@
                         <form method="POST" id="fruitkha-contact" action="{{ route('contactForm') }}">
                             @csrf
                             <p>
-                                <input type="text" placeholder="Name" name="name" id="name">
-                                <input type="email" placeholder="Email" name="email" id="email">
+                                <input type="text" placeholder="Name" name="name" value="{{ old('name') }}" id="name">
+                                <input type="email" placeholder="Email" value="{{ old('email') }}" name="email" id="email">
                             </p>
                             <p>
-                                <input type="tel" placeholder="Phone" name="phone" id="phone">
-                                <input type="text" placeholder="Subject" name="subject" id="subject">
+                                <input type="tel" placeholder="Phone" value="{{old('phone')}}"  name="phone" id="phone">
+                                <input type="text" placeholder="Subject" value="{{old('subject')}}" name="subject" id="subject">
                             </p>
                             <p>
-                                <textarea name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                <textarea name="comment" id="comment"   cols="30" rows="10" placeholder="Message">{{old('comment')}}</textarea>
                             </p>
                             <input type="hidden" name="token" value="FsWga4&@f6aw" />
                             <p><input type="submit" value="Submit"></p>

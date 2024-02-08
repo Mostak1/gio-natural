@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resources([
         'category' => CategoryController::class,
+        'order' => OrderController::class,
         // 'product' => ProductController::class,
      ]);
      

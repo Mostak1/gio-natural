@@ -1,5 +1,6 @@
 @extends('users.layouts.main')
 @section('title', 'Shop-Gio-Natural')
+
 @section('content')
     <!-- breadcrumb-section -->
     <div class="breadcrumb-section breadcrumb-bg">
@@ -60,7 +61,7 @@
 
 @endsection
 @section('scripts')
-    
+
     <script>
         $(document).ready(function() {
             var data;
@@ -144,7 +145,7 @@
                     displayPage(currentPage + 1);
                 }
             });
-
+            // Product Add to cart....
             $('#productContainer').on('click', '.cart-btn', function(event) {
                 event.preventDefault();
                 var productId = $(this).data('id');
@@ -152,14 +153,37 @@
                 // Check if 'cart' key exists in session, if not, initialize it as an empty array
                 var cart = JSON.parse(sessionStorage.getItem('cart')) || [];
 
-                // Add the product ID to the cart array
-                cart.push(productId);
+                if (cart.includes(productId)) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Oops...',
+                        text: 'This product is already in your cart!',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000 // 3 seconds
 
-                // Save the updated cart array to the session
-                sessionStorage.setItem('cart', JSON.stringify(cart));
+                    });
+                    console.log('This product is already in your cart!');
+                } else {
+                    // Add the product ID to the cart array
+                    cart.push(productId);
 
-                // You can optionally provide user feedback, e.g., show a message, update UI, etc.
-                alert('Product added to cart!');
+                    // Save the updated cart array to the session
+                    sessionStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Provide user feedback
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Product added to cart!',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000 // 3 seconds
+
+                    });
+                }
             });
         });
     </script>

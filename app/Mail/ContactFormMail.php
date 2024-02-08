@@ -25,7 +25,7 @@ class ContactFormMail extends Mailable
     public $email;
     public $phone;
     public $subject;
-    public $message;
+    public $comment;
     // public function __construct($name, $email, $phone, $subject, $message)
     public function __construct($formData)
     {
@@ -33,7 +33,7 @@ class ContactFormMail extends Mailable
         $this->email = $formData['email'];
         $this->phone = $formData['phone'];
         $this->subject = $formData['subject'];
-        $this->message = $formData['message'];
+        $this->comment = $formData['comment'];
     }
 
     /**

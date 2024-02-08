@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('invoice_number')->unique();
             $table->decimal('subtotal', 10, 2);
             $table->text('trx_id')->nullable();
+            $table->text('modified_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
