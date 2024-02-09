@@ -32,6 +32,8 @@ Route::post('submit-contact-form', [HomeController::class, 'submitContactForm'])
 Route::get('productjson', [ProductController::class, 'productJson']);
 Route::post('place-order', [OrderController::class, 'placeOrder'])->name('place-order');
 
+Route::get('userOrder', [HomeController::class, 'order'])->name('userOrder');
+Route::post('orderDetails', [HomeController::class, 'orderDetails'])->name('orderDetails');
 
 Route::resources([
     // 'category' => CategoryController::class,

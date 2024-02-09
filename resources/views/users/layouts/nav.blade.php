@@ -35,6 +35,7 @@
 								<li><a href="{{url('about')}}">About</a></li>
 								<li><a href="{{url('contact')}}">Contact</a></li>
 								<li><a href="{{url('cart')}}">Cart</a></li>
+								<li><a href="{{url('userOrder')}}">Order Check</a></li>
 								<li><a href="{{url('news')}}">News</a></li>
 								{{-- <li><a href="#">Pages</a>
 									<ul class="sub-menu">
@@ -65,7 +66,7 @@
 								<li>
 									<div class="header-icons">
 										<a class="shopping-cart" href="{{url('cart')}}"><i class="fas fa-shopping-cart"></i></a>
-										<a class="shopping-cart" href="{{url('login')}}">LogIn</a>
+										<a class="shopping-cart" href="{{url('login')}}">09666-747470</a>
 										{{-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> --}}
 									</div>
 								</li>

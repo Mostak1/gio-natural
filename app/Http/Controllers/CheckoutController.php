@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactFormMail;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -149,6 +151,16 @@ class CheckoutController extends Controller
 
         // Save the changes to the database
         $order->save();
+        // dd($request->all());
+        $validatedData=[
+            'name' => $request->customer_name,
+            'email' => $request->customer_email,
+            'phone' => $request->phone,
+            'subject' => 'Order Confirmation Email',
+            'comment' =>'Order Payment Received' ,
+        ];
+        // Mail::to(users: 'acrh.mostak@gmail.com')->send(new ContactFormMail($validatedData));
+        // Mail::to(users: $request->customer_email)->send(new ContactFormMail($validatedData));
         //Store Transaction Information and redirect to success page
         echo 'store payment transaction';
         return redirect()->route('cart')->with('success', 'Order placed and paid successfully, Thank You');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactFormMail;
 use App\Mail\TestEmail;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,7 +13,11 @@ class HomeController extends Controller
 {
     public function home()
     {
-        return view('users.home');
+        $products = Product::with('category')
+            ->orderBy('id', 'DESC')
+            ->take(3)
+            ->get();
+        return view('users.home', compact('products'));
     }
     public function about()
     {
@@ -77,14 +82,23 @@ class HomeController extends Controller
         $subject = $request->subject;
         $message = $request->comment;
         // Send email to the specified email address
-    //    $mail= Mail::to(users: 'acrh.mostak@gmail.com')->send(new ContactFormMail($name, $email, $phone, $subject, $message));
-    //    $mail= Mail::to(users: 'gionaturals.rakib@gmail.com')->send(new ContactFormMail($validatedData));
-       $mail= Mail::to(users: 'acrh.mostak@gmail.com')->send(new ContactFormMail($validatedData));
+        //    $mail= Mail::to(users: 'acrh.mostak@gmail.com')->send(new ContactFormMail($name, $email, $phone, $subject, $message));
+        //    $mail= Mail::to(users: 'gionaturals.rakib@gmail.com')->send(new ContactFormMail($validatedData));
+        $mail = Mail::to(users: 'acrh.mostak@gmail.com')->send(new ContactFormMail($validatedData));
 
         if ($mail) {
             return redirect()->back()->with('success', 'Email sent successfully!');
         } else {
             return redirect()->back()->with('error', 'Failed to send email. Please try again later.');
         }
+    }
+    public function order()
+    {
+        return view('users.order');
+    }
+    public function orderDetails(Request $request)
+    {
+        $orderData = Order::with('orderDetails.product')->where('phone', $request->phone)->get();
+        return response()->json($orderData);
     }
 }

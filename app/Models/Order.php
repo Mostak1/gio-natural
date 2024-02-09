@@ -21,4 +21,7 @@ class Order extends Model
         'status',
         'modified_by',
     ];
+    public function orderDetails(){
+        return $this->hasMany(OrderDetail::class);
+    }
 }

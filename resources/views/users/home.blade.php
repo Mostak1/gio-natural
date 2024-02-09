@@ -121,36 +121,20 @@
 			</div>
 
 			<div class="row">
+				@foreach ($products as $item)
+					
+				
 				<div class="col-lg-4 col-md-6 text-center">
 					<div class="single-product-item">
 						<div class="product-image">
-							<a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
+							<a href="{{ url('product')}}/{{ $item->id}}"><img  height="150px" src="{{ asset('storage/') }}/{{$item->thumbnail}}" alt=""></a>
 						</div>
-						<h3>Strawberry</h3>
-						<p class="product-price"><span>Per Kg</span> 85$ </p>
-						<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+						<h3>{{$item->title}}</h3>
+						<p class="product-price"><span>Per {{$item->weight}} {{$item->unit}}</span> {{$item->price}}Tk </p>
+						<a data-id="{{$item->id}}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="single-product.html"><img src="assets/img/products/product-img-2.jpg" alt=""></a>
-						</div>
-						<h3>Berry</h3>
-						<p class="product-price"><span>Per Kg</span> 70$ </p>
-						<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="single-product.html"><img src="assets/img/products/product-img-3.jpg" alt=""></a>
-						</div>
-						<h3>Lemon</h3>
-						<p class="product-price"><span>Per Kg</span> 35$ </p>
-						<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
+				@endforeach
 			</div>
 		</div>
 	</div>
@@ -269,7 +253,7 @@
 	<section class="shop-banner">
     	<div class="container">
         	<h3>December sale is on! <br> with big <span class="orange-text">Discount...</span></h3>
-            <div class="sale-percent"><span>Sale! <br> Upto</span>50% <span>off</span></div>
+            <div class="sale-percent"><span>Sale! <br> Upto</span>20% <span>off</span></div>
             <a href="shop.html" class="cart-btn btn-lg">Shop Now</a>
         </div>
     </section>
@@ -342,4 +326,50 @@
 	<!-- end latest news -->
 
 @endsection
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            // Product Add to cart....
+            // $('#productContainer').on('click', '.cart-btn', function(event) {
+            $('.cart-btn').click(function(event) {
+                event.preventDefault();
+                var productId = $(this).data('id');
 
+                // Check if 'cart' key exists in session, if not, initialize it as an empty array
+                var cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+
+                if (cart.includes(productId)) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Oops...',
+                        text: 'This product is already in your cart!',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000 // 3 seconds
+
+                    });
+                    console.log('This product is already in your cart!');
+                } else {
+                    // Add the product ID to the cart array
+                    cart.push(productId);
+
+                    // Save the updated cart array to the session
+                    sessionStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Provide user feedback
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Product added to cart!',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000 // 3 seconds
+
+                    });
+                }
+            });
+        });
+    </script>
+@endsection

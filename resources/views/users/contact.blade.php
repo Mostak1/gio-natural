@@ -28,16 +28,7 @@
                             assumenda. Perferendis, quo alias quaerat aliquid. Corporis ipsum minus voluptate? Dolore, esse
                             natus!</p>
                     </div>
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="alert alert-success">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                    
 
                     <div id="form_status"></div>
                     <div class="contact-form">
