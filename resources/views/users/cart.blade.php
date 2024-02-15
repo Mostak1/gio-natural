@@ -124,8 +124,14 @@
                                     <td><span id="totalAmount"></span><span> TK</span></td>
                                 </tr>
                                 <tr class="total-data">
-                                    <td><strong>Shipping: </strong></td>
-                                    <td><span id="shippingCost"></span>80<span></span></td>
+                                    <td class="d-flex"><strong>Shipping: </strong>
+                                        <select name="" id="shipping" class="w-50 form-control me-2">
+                                            <option value="0">Select Shipping</option>
+                                            <option value="130">Outside Dhaka</option>
+                                            <option value="80">Inside Dhaka</option>
+                                        </select>
+                                    </td>
+                                    <td><span id="shippingCost"></span><span></span></td>
                                 </tr>
                                 <tr class="total-data">
                                     <td><strong>Total: </strong></td>
@@ -167,13 +173,27 @@
                                         placeholder="Email"></p>
                                 <p><input name="billing_address" class="form-control" id="billBaddress" type="text"
                                         placeholder="Billing Address"></p>
-                                <p><input name="shipping_address" class="form-control" id="billSaddress" type="text"
-                                        placeholder="Shipping Address"></p>
+                                <p>
+
+                                    <input name="shipping_address" class="form-control" id="billSaddress" type="text"
+                                        placeholder="Shipping Address">
+                                </p>
                                 <p><input name="phone" class="form-control" id="billphone" type="tel"
                                         placeholder="Phone"></p>
                                 <p>
                                     <textarea class="form-control" name="message" id="billmessage" cols="30" rows="10"
                                         placeholder="Say Something"></textarea>
+                                </p>
+                                <p>
+                                    <label for="" class="form-label">Payment Method:</label>
+                                    <select name="" id="pay_method" class="form-control">
+                                        <option value="0">Select</option>
+                                        <option value="1">Cash on delivery</option>
+                                        <option value="2">bKash</option>
+                                        <option value="3">Nagod</option>
+                                        <option value="4">Rocket</option>
+                                        <option value="5">Card</option>
+                                    </select>
                                 </p>
                                 <input type="text" name="invoice_number" id="invoice_number" hidden>
                                 <input type="text" name="total" id="subTotalInput" hidden>
@@ -186,6 +206,7 @@
             </div>
         </div>
     </div>
+
     <!-- end cart -->
 
 @endsection
@@ -213,6 +234,12 @@
                 var isPhoneValid = validateField($('#billphone'),
                     'The phone number must start with 01 and have a length of 11 characters.',
                     /^01\d{9}$/);
+                // Validate Pay Method field
+                var isPayValid = validateField($('#pay_method'),
+                    'Must Select Pay Method', /^[1-5]$/);
+                // Validate Pay Method field
+                var shippingValid = validateField($('#shipping'),
+                    'Must Select shipping', /^(80|130)$/);
 
 
 
@@ -224,35 +251,23 @@
                 var billphone = $('#billphone').val();
                 var billmessage = $('#billmessage').val();
                 var invoice_number = $('#invoice_number').val();
+                var pay_method = $('#pay_method').val();
                 // Validate if any field is empty
                 // Check if any field is empty or has validation errors
                 console.log(isEmailValid);
                 if (!isNameValid || !isEmailValid || !isBAddressValid || !isSAddressValid || !
-                    isPhoneValid) {
+                    isPhoneValid || !isPayValid) {
 
                     Swal.fire({
-                        // icon: 'error',
+                        icon: "error",
                         title: 'Error Placing Order',
                         text: 'Please fill in all required fields',
                         confirmButtonText: 'OK',
-                        // imageUrl: 'https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg',
-                        imageUrl: "{{ asset('alert/close.png') }}",
-                        imageWidth: 100,
-                        imageHeight: 100,
-                        background: "#fff asset('alert/close.png')",
-                        // background: '#fff url(https://image.shutterstock.com/z/stock-vector--exclamation-mark-exclamation-mark-hazard-warning-symbol-flat-design-style-vector-eps-444778462.jpg)',
-                        customClass: {
-                            popup: 'colorful-popup',
-                            header: 'colorful-header',
-                            title: 'colorful-title',
-                            closeButton: 'colorful-close-button',
-                            icon: 'colorful-icon',
-                            content: 'colorful-content',
-                            confirmButton: 'colorful-confirm-button',
-                            footer: 'colorful-footer'
-                        }
-                    });
-                    return;
+
+                    })
+                    return back;
+
+
                 }
 
                 // Collect cart details
@@ -309,17 +324,18 @@
                 $.ajax({
                     url: "{{ route('place-order') }}",
                     method: 'POST',
-                    data:  orderData, // Include your other data here
+                    data: orderData, // Include your other data here
                     success: function(response) {
+                        return back;
                         // Handle success with SweetAlert2
-                        $('#placeOrder').unbind('submit').submit();
-                            // Swal.fire({
-                            //     icon: 'info',
-                            //     title: 'Order Not Placed Successfully!',
-                            //     text: ' ' + response,
-                            //     confirmButtonText: 'OK'
-                            // });
-                        
+                        // $('#placeOrder').unbind('submit').submit();
+                        // Swal.fire({
+                        //     icon: 'info',
+                        //     title: 'Order Not Placed Successfully!',
+                        //     text: ' ' + response,
+                        //     confirmButtonText: 'OK'
+                        // });
+
                     },
                     error: function(xhr, status, error) {
                         // Handle error with SweetAlert2
@@ -412,7 +428,7 @@
             function displayCartItems(cart) {
                 var cartTableBody = $('#cartTableBody');
                 cartTableBody.empty();
-
+                var totalWeight = 0;
                 // Loop through the cart items
                 $.each(cart, function(index, productId) {
                     // Assuming you have a JavaScript function to retrieve product details by ID
@@ -420,6 +436,7 @@
 
                     // Check if product is found
                     if (product) {
+                        totalWeight += parseFloat(product.weight);
                         // Display the product in the cart table
                         var cartItemHtml = '<tr>' +
                             '<td class="product-remove"><button class="btn btn-outline-danger remove-item" data-id="' +
@@ -428,7 +445,9 @@
                             '<td class="product-image"><img src="{{ asset('storage/') }}/' + product
                             .thumbnail +
                             '" alt="Product Image" height="50px"></td>' +
-                            '<td class="product-name">' + product.title + '('+product.weight + product.unit+')</td>' +
+                            '<td class="product-name">' + product.title + '(<span class="product-weight">' +
+                            product.weight + '</span>' + product
+                            .unit + ')</td>' +
                             '<td class="product-price">' + product.price + ' TK</td>' +
                             '<td class="product-quantity"><input type="number" class="quantity-input" value="1" min="1"></td>' +
                             '<td class="product-total">' + product.price + ' TK</td>' +
@@ -451,6 +470,9 @@
             $('#cartTableBody').on('change', '.quantity-input', function() {
                 updateCartTotal();
             });
+            $('#shipping').on('change', function() {
+                updateCartTotal();
+            })
 
             function removeItemFromCart(productId) {
                 // Remove the item from the cart array
@@ -467,15 +489,18 @@
 
             function updateCartTotal() {
                 var total = 0;
-
+                var totalWeight = 0;
                 // Loop through the displayed items and update the total
                 $('#cartTableBody tr').each(function() {
                     var price = parseFloat($(this).find('.product-price').text());
+                    var weight = parseFloat($(this).find('.product-weight').text());
                     var quantity = parseInt($(this).find('.quantity-input').val());
+                    var shipping = parseInt($('#shipping').val());
                     var itemTotal = price * quantity;
-
+                    var itemWeight = weight * quantity;
+                    totalWeight += itemWeight;
                     total += itemTotal;
-                    subtotal = 80 + total;
+                   
 
                     $(this).find('.product-total').text(itemTotal.toFixed(2) + ' TK');
                 });
@@ -495,10 +520,36 @@
                     console.log(reference);
                     return reference;
                 }
+
+                function shippingCost() {
+                    var shipping = parseInt($('#shipping').val());
+                    var sweight = Math.ceil(totalWeight);
+
+                    var shippingCost = 0;
+                    if (shipping == 130) {
+                        if (sweight > 0) {
+                            shippingCost = 130 + 25 * (sweight - 1);
+                        } else {
+                            shippingCost = 130;
+                        }
+                    } else if (shipping == 80) {
+                        if (sweight > 0) {
+                            shippingCost = 80 + 20 * (sweight - 1);
+                        } else {
+                            shippingCost = 80;
+                        }
+                    }
+
+                    return shippingCost;
+
+                };
+                var totalShippingCost = shippingCost();
                 var reference = generateReference();
+                var payAmmount = total + totalShippingCost;
                 $('#totalAmount').text(total.toFixed(2));
-                $('#subTotal').text(subtotal.toFixed(2));
-                $('#subTotalInput').val(subtotal.toFixed(2));
+                $('#subTotal').text(payAmmount.toFixed(2));
+                $('#shippingCost').text(totalShippingCost.toFixed(2));
+                $('#subTotalInput').val(payAmmount.toFixed(2));
                 $('#invoice_number').val(reference);
 
             }
