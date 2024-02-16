@@ -1,0 +1,1 @@
+    <span wire:click="addToCart">Add to Cart</span>

@@ -183,8 +183,14 @@
                         timer: 3000 // 3 seconds
 
                     });
+                    updateCartItemCount();
                 }
             });
+            function updateCartItemCount() {
+                var cartItemCount = JSON.parse(sessionStorage.getItem('cart')).length;
+                $('#totalCart').text(cartItemCount);
+				console.log('cartItemCount');
+            }
         });
     </script>
 

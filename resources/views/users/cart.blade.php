@@ -219,11 +219,16 @@
                 e.preventDefault();
                 // Validate Name field
                 var isNameValid = validateField($('#billname'), 'Name is required');
-
+                $('#billname').on('input', function() {
+                    validateField($('#billname'), 'Name is required');
+                });
                 // Validate Email field
                 var isEmailValid = validateField($('#billemail'), 'Invalid email format',
                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-
+                $('#billemail').on('change', function() {
+                    validateField($('#billemail'), 'Invalid email format',
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+                });
                 // Validate Billing Address field
                 var isBAddressValid = validateField($('#billBaddress'), 'Address is required');
 
@@ -265,7 +270,7 @@
                         confirmButtonText: 'OK',
 
                     })
-                    return back;
+                    return false;
 
 
                 }
@@ -294,6 +299,7 @@
                     customer_email: billemail,
                     billing_address: billBaddress,
                     shipping_address: billSaddress,
+                    pay_method: pay_method,
                     phone: billphone,
                     message: billmessage,
                     cartDetails: cartDetails,
@@ -307,16 +313,7 @@
                         title: 'No cart Product available',
                         text: 'Please Add Product To Cart First',
                         confirmButtonText: 'OK',
-                        customClass: {
-                            popup: 'colorful-popup',
-                            header: 'colorful-header',
-                            title: 'colorful-title',
-                            closeButton: 'colorful-close-button',
-                            icon: 'colorful-icon',
-                            content: 'colorful-content',
-                            confirmButton: 'colorful-confirm-button',
-                            footer: 'colorful-footer'
-                        }
+
                     });
                     return;
                 }
@@ -326,15 +323,17 @@
                     method: 'POST',
                     data: orderData, // Include your other data here
                     success: function(response) {
-                        return back;
+
                         // Handle success with SweetAlert2
                         // $('#placeOrder').unbind('submit').submit();
-                        // Swal.fire({
-                        //     icon: 'info',
-                        //     title: 'Order Not Placed Successfully!',
-                        //     text: ' ' + response,
-                        //     confirmButtonText: 'OK'
-                        // });
+                        window.location.href = 'userOrder';
+                        console.log('new pay:', pay_method);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Order  Placed Successfully!',
+                            text: 'Thanks For Shopping with Gio-Naturals',
+                            confirmButtonText: 'OK'
+                        });
 
                     },
                     error: function(xhr, status, error) {
@@ -366,6 +365,16 @@
                         return;
                     }
                 });
+                console.log(pay_method);
+                if (pay_method == 1) {
+                    console.log('Cash on delivery');
+
+                } else {
+
+                    console.log('Online Payment');
+                    $('#placeOrder').unbind('submit').submit();
+                }
+
                 // $('#placeOrder').unbind('submit').submit();
             });
 
@@ -500,7 +509,7 @@
                     var itemWeight = weight * quantity;
                     totalWeight += itemWeight;
                     total += itemTotal;
-                   
+
 
                     $(this).find('.product-total').text(itemTotal.toFixed(2) + ' TK');
                 });

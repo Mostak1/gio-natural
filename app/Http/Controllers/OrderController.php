@@ -27,6 +27,7 @@ class OrderController extends Controller
             'phone' => 'required|string',
             'message' => 'nullable|string',
             'subtotal' => 'required|numeric',
+            'pay_method' => 'required',
             'invoice_number' => 'required|string|unique:orders,invoice_number',
         ]);
         

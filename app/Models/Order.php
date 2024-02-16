@@ -20,6 +20,7 @@ class Order extends Model
         'invoice_number',
         'status',
         'modified_by',
+        'pay_method',
     ];
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);
