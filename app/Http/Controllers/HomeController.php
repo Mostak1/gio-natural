@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ContactFormMail;
 use App\Mail\TestEmail;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -96,7 +97,18 @@ class HomeController extends Controller
     {
         return view('users.order');
     }
-    public function orderDetails(Request $request)
+    public function orderDetails2($id)
+    {
+        $item = Order::with('orderDetails.product')->find($id);
+        return response()->json($item);
+    }
+    public function orderDetails($id)
+    {
+        $item = Order::with('orderDetails.product')->find($id);
+        $details = OrderDetail::with('product')->where('order_id',$id)->get();
+        return view('users.order-details',compact('item','details'));
+    }
+    public function orderjson(Request $request)
     {
         $orderData = Order::with('orderDetails.product')->where('phone', $request->phone)->get();
         return response()->json($orderData);

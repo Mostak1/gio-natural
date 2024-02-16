@@ -56,8 +56,8 @@
                 </div>
             </div>
         </div>
+       
     </div>
-   
 @endsection
 @section('scripts')
     <script>
@@ -73,7 +73,7 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('orderDetails') }}",
+                    url: "{{ route('orderjson') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "phone": phone
@@ -86,11 +86,14 @@
                             order += `
                         <div class="card my-2">
                         <div class="card-body">
-                        <h5 class="card-title">Invoice Number: ${item.invoice_number}</h5>
+                        <h5 class="card-title">Invoice Number: ${item.invoice_number} and Id ${item.id}</h5>
                         <div class="card-subtitle mb-2 text-body-secondary row row-cols-2">
                             <div class="col text-warning-emphasis">Status: ${item.status}</div>
                             <div class="col">Total Payment: ${item.subtotal}</div> 
-                        </div><hr/>`;
+                            </div>
+                            <a href="{{url('orderDetails/3')}}" class="cart-btn">Order Details</a>
+                        
+                        <hr/>`;
                             // Assuming orderDetails is available and contains product details
                             var orderDetails = item.order_details;
                             

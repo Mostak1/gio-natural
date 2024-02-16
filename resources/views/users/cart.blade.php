@@ -473,6 +473,7 @@
             $('#cartTableBody').on('click', '.remove-item', function() {
                 var productId = $(this).data('id');
                 removeItemFromCart(productId);
+                updateCartItemCount();
             });
 
             // Event handling for changing quantity
@@ -561,6 +562,11 @@
                 $('#subTotalInput').val(payAmmount.toFixed(2));
                 $('#invoice_number').val(reference);
 
+            }
+            function updateCartItemCount() {
+                var cartItemCount = JSON.parse(sessionStorage.getItem('cart')).length;
+                $('#totalCart').text(cartItemCount);
+				console.log('cartItemCount');
             }
         });
     </script>

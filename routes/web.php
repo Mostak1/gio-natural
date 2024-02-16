@@ -33,7 +33,8 @@ Route::get('productjson', [ProductController::class, 'productJson']);
 Route::post('place-order', [OrderController::class, 'placeOrder'])->name('place-order');
 
 Route::get('userOrder', [HomeController::class, 'order'])->name('userOrder');
-Route::post('orderDetails', [HomeController::class, 'orderDetails'])->name('orderDetails');
+Route::get('orderDetails/{id}', [HomeController::class, 'orderDetails'])->name('orderDetails');
+Route::post('orderjson', [HomeController::class, 'orderjson'])->name('orderjson');
 
 Route::resources([
     // 'category' => CategoryController::class,
