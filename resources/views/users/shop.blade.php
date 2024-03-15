@@ -188,7 +188,7 @@
             });
             function updateCartItemCount() {
                 var cartItemCount = JSON.parse(sessionStorage.getItem('cart')).length;
-                $('#totalCart').text(cartItemCount);
+                $('.totalCart').text(cartItemCount);
 				console.log('cartItemCount');
             }
         });

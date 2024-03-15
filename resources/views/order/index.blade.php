@@ -23,7 +23,7 @@
             <table id="dataTable" class="w-full text-sm text-left rtl:text-right text-teal-500 dark:text-teal-400 my-10">
                 <thead class="text-xs text-gray-700 uppercase bg-teal-50 dark:bg-teal-200 dark:text-teal-400">
                     <tr>
-                        <th colspan="12" class="tablebtn"></th>
+                        <th colspan="13" class="tablebtn"></th>
                     </tr>
                     <tr>
                         <th scope="col" class="px-6 py-3">

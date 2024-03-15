@@ -55,11 +55,12 @@ class OrderController extends Controller
                 $orderDetail->save();
             }
 
-           
+           $orderId = $order->id;
             DB::commit();
 
             // Return a success response
-            return response()->json(['success' => 'Order placed successfully'], 200);
+            return response()->json(['success' => 'Order placed successfully', 'orderId' => $orderId], 200);
+
         } catch (\Exception $e) {
             // An error occurred, rollback the transaction
             DB::rollback();

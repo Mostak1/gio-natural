@@ -144,7 +144,7 @@ class CheckoutController extends Controller
             // Handle the case where the order with the provided invoice number is not found
             return redirect()->route('cart')->with('error', 'Order not found');
         }
-
+$orderId = $order->id;
         // Update the trx_id column of the order
         $order->trx_id = $request->trx_id;
         $order->status = 'Received';
@@ -163,6 +163,7 @@ class CheckoutController extends Controller
         // Mail::to(users: $request->customer_email)->send(new ContactFormMail($validatedData));
         //Store Transaction Information and redirect to success page
         echo 'store payment transaction';
-        return redirect()->route('cart')->with('success', 'Order placed and paid successfully, Thank You');
+        return redirect()->route('orderDetails', ['orderId' => $orderId])->with('success', 'Order placed and paid successfully, Thank You');
+
     }
 }

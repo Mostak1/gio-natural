@@ -23,12 +23,6 @@
                     <!-- menu start -->
                     <nav class="main-menu">
                         <ul>
-                            {{-- <li class="current-list-item"><a href="#">Home</a>
-									<ul class="sub-menu">
-										<li><a href="index.html">Static Home</a></li>
-										<li><a href="index_2.html">Slider Home</a></li>
-									</ul>
-								</li> --}}
                             <li><a href="{{ url('/') }}">Home</a></li>
                             <li><a href="{{ url('shop') }}">Shop</a></li>
                             <li><a href="{{ url('about') }}">About</a></li>
@@ -36,50 +30,19 @@
                             <li><a href="{{ url('cart') }}">Cart</a></li>
                             <li><a href="{{ url('userOrder') }}">Order Check</a></li>
                             <li><a href="{{ url('news') }}">News</a></li>
-                            {{-- <li><a href="#">Pages</a>
-									<ul class="sub-menu">
-										<li><a href="404.html">404 page</a></li>
-										<li><a href="{{url('about')}}">About</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										<li><a href="checkout.html">Check Out</a></li>
-										<li><a href="contact.html">Contact</a></li>
-										<li><a href="news.html">News</a></li>
-										<li><a href="shop.html">Shop</a></li>
-									</ul>
-								</li> --}}
-                            {{-- <li><a href="news.html">News</a>
-									<ul class="sub-menu">
-										<li><a href="news.html">News</a></li>
-										<li><a href="single-news.html">Single News</a></li>
-									</ul>
-								</li>
-								<li><a href="contact.html">Contact</a></li>
-								<li><a href="shop.html">Shop</a>
-									<ul class="sub-menu">
-										<li><a href="shop.html">Shop</a></li>
-										<li><a href="checkout.html">Check Out</a></li>
-										<li><a href="single-product.html">Single Product</a></li>
-										<li><a href="cart.html">Cart</a></li>
-									</ul>
-								</li>
-								<button type="button" class="btn btn-primary position-relative">
-  Inbox
-  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-    99+
-    <span class="visually-hidden">unread messages</span>
-  </span>
-</button>
-								--}}
+
                             <li>
                                 <div class="header-icons">
                                     <a class="shopping-cart position-relative" href="{{ url('cart') }}">
-										<i class="fas fa-shopping-cart"></i>  
-                                        
-										<span id="totalCart" class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger">
-											
-										  </span>
-									</a>
-                                    <a class="shopping-cart" href="{{ url('login') }}">09666-747470</a>
+                                        <i class="fas fa-shopping-cart"></i>
+
+                                        <span id="totalCart"
+                                            class="totalCart position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger">
+
+                                        </span>
+                                    </a>
+                                    <a class="shopping-cart" href="tel:09666-747470">09666-747470</a>
+
                                     {{-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> --}}
                                 </div>
                             </li>
@@ -87,12 +50,27 @@
                     </nav>
                     <a class="mobile-show search-bar-icon" href="{{ url('cart') }}">
                         <i class="fas fa-shopping-cart"></i>
+                        <span id=""
+                            class="totalCart position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger">
+
+                        </span>
                     </a>
                     <div class="mobile-menu"></div>
+
                     <!-- menu end -->
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="mBtnCon container">
+    <div class="mobileButton mx-auto">
+        <a href="tel:09666-747470">
+            <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script><dotlottie-player
+                src="https://lottie.host/54f067e1-3bb2-4d68-b6d6-22da9ee77fcf/HTK7huocy2.lottie" background
+                speed="1" style="width: 100px; height: 100px" direction="1" playMode="normal" loop
+                autoplay></dotlottie-player>
+        </a>
     </div>
 </div>
 <!-- end header -->

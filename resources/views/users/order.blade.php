@@ -86,12 +86,12 @@
                             order += `
                         <div class="card my-2">
                         <div class="card-body">
-                        <h5 class="card-title">Invoice Number: ${item.invoice_number} and Id ${item.id}</h5>
+                        <h5 class="card-title">Invoice Number: ${item.invoice_number}</h5>
                         <div class="card-subtitle mb-2 text-body-secondary row row-cols-2">
                             <div class="col text-warning-emphasis">Status: ${item.status}</div>
                             <div class="col">Total Payment: ${item.subtotal}</div> 
                             </div>
-                            <a href="{{url('orderDetails/3')}}" class="cart-btn">Order Details</a>
+                            <a href="{{url('orderDetails/${item.id}')}}" class="cart-btn">Order Details</a>
                         
                         <hr/>`;
                             // Assuming orderDetails is available and contains product details

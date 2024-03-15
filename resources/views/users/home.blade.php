@@ -356,7 +356,7 @@
 
                     // Save the updated cart array to the session
                     sessionStorage.setItem('cart', JSON.stringify(cart));
-
+					updateCartItemCount();
                     // Provide user feedback
                     Swal.fire({
                         icon: 'success',
@@ -370,6 +370,11 @@
                     });
                 }
             });
+			function updateCartItemCount() {
+                var cartItemCount = JSON.parse(sessionStorage.getItem('cart')).length;
+                $('.totalCart').text(cartItemCount);
+				console.log('cartItemCount');
+            }
         });
     </script>
 @endsection

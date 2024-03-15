@@ -11,6 +11,7 @@
             border-radius: 15px;
             border-style: dashed;
         }
+        
     </style>
 @endsection
 @section('content')
@@ -34,7 +35,7 @@
         <div class="row row-cols-4 my-5">
             <div class="col text-center border-end">
                 <div class="">Order number:</div>
-                <div class=""><strong>{{ $item->invoice_number }}</strong></div>
+                <div class=""><strong>00{{ $item->id }}</strong></div>
             </div>
             <div class="col text-center border-end">
                 <div class="">Date:</div>
@@ -70,13 +71,15 @@
             <div class="col text-end"><strong>TOTAL</strong></div>
         </div>
         @foreach ($details as $item)
-            <div class="row row-cols-3 border-bottom fs-5">
+            <div class="row row-cols-3 border-bottom">
                 <div class="col">{{$item->product->title}}</div>
                 <div class="col">{{$item->quantity}}</div>
                 <div class="col text-end">{{$item->item_total}}</div>
             </div>
         @endforeach
-       
+       <div class="my-4 fs-2 text-center">You will get the product soon.</div>
+       <p class="text-center my-2">For any queries, please call <a href="tel:09666-747470">09666-747470</a>.</p>
+
 
     </div>
 @endsection

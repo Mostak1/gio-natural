@@ -261,7 +261,7 @@
                 // Check if any field is empty or has validation errors
                 console.log(isEmailValid);
                 if (!isNameValid || !isEmailValid || !isBAddressValid || !isSAddressValid || !
-                    isPhoneValid || !isPayValid) {
+                    isPhoneValid || !isPayValid || !shippingValid) {
 
                     Swal.fire({
                         icon: "error",
@@ -326,7 +326,15 @@
 
                         // Handle success with SweetAlert2
                         // $('#placeOrder').unbind('submit').submit();
-                        window.location.href = 'userOrder';
+                        if (pay_method == 1) {
+                            console.log('Cash on delivery');
+
+                            window.location.href = 'orderDetails/'+ response.orderId;
+                        } else {
+
+                            console.log('Online Payment');
+                            $('#placeOrder').unbind('submit').submit();
+                        }
                         console.log('new pay:', pay_method);
                         Swal.fire({
                             icon: 'success',
@@ -366,14 +374,7 @@
                     }
                 });
                 console.log(pay_method);
-                if (pay_method == 1) {
-                    console.log('Cash on delivery');
 
-                } else {
-
-                    console.log('Online Payment');
-                    $('#placeOrder').unbind('submit').submit();
-                }
 
                 // $('#placeOrder').unbind('submit').submit();
             });
@@ -563,10 +564,11 @@
                 $('#invoice_number').val(reference);
 
             }
+
             function updateCartItemCount() {
                 var cartItemCount = JSON.parse(sessionStorage.getItem('cart')).length;
-                $('#totalCart').text(cartItemCount);
-				console.log('cartItemCount');
+                $('.totalCart').text(cartItemCount);
+                console.log('cartItemCount');
             }
         });
     </script>

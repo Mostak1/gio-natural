@@ -33,6 +33,24 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <!-- responsive -->
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    <style>
+        .mBtnCon {
+            display: none;
+        }
+
+        @media(max-width:600px) {
+            .mBtnCon {
+                display: block;
+            }
+
+            .mobileButton {
+
+                position: fixed;
+                bottom: 10px;
+                left: 35%;
+            }
+        }
+    </style>
     @yield('styles')
 </head>
 
@@ -76,15 +94,15 @@
             // Function to update cart item count in the navbar
             function updateCartItemCount() {
                 var cartItemCount = JSON.parse(sessionStorage.getItem('cart')).length;
-                $('#totalCart').text(cartItemCount);
-				console.log('cartItemCount');
+                $('.totalCart').text(cartItemCount);
+                console.log('cartItemCount');
             }
 
             // Initial update when the page loads
             updateCartItemCount();
 
             // Attach click event handler to cart buttons to update count
-           
+
 
 
         });
