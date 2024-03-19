@@ -28,9 +28,11 @@
                     <div class="product-filters">
                          <ul>
                             <li class="active" data-filter="*">All</li>
-                            <li data-filter=".strawberry">Strawberry</li>
-                            <li data-filter=".berry">Berry</li>
-                            <li data-filter=".lemon">Lemon</li>
+                            @foreach ($categories as $category)
+
+                            <li data-filter=".cat{{ $category->id }}">{{ $category->name }}</li>
+
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -84,7 +86,7 @@
                 $('#productContainer').empty();
                 console.log(pageData);
                 $.each(pageData, function(index, product) {
-                    var productHtml = '<div class="col-lg-4 col-md-6 text-center">' +
+                    var productHtml = '<div class="col-lg-4 col-md-6 text-center cat'+ product.category_id +' ">' +
                         '<div class="single-product-item">' +
                         '<div class="product-image">' +
                         '<a href="{{ url('product') }}/' + product.id +
@@ -192,6 +194,25 @@
 				console.log('cartItemCount');
             }
         });
+
+
+        //     // projects filters isotop
+        //     $(".product-filters li").on('click', function () {
+
+        //     $(".product-filters li").removeClass("active");
+        //     $(this).addClass("active");
+
+        //     var selector = $(this).attr('data-filter');
+
+        //     $(".product-lists").isotope({
+        //         filter: selector,
+        //     });
+
+        // });
+
+        // // isotop inner
+        // $(".product-lists").isotope();
+
     </script>
 
 

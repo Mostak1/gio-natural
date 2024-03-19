@@ -6,6 +6,7 @@ use App\Mail\ContactFormMail;
 use App\Mail\TestEmail;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -46,10 +47,10 @@ class HomeController extends Controller
     }
     public function shop()
     {
-        $products = Product::with('category')
-            ->orderBy('id', 'DESC')
-            ->paginate(6);
-        return view('users.shop', compact('products'));
+        $categories = Category::get();
+        $products = Product::with('category')->orderBy('id', 'DESC')->paginate(6);
+
+        return view('users.shop', compact('categories','products'));
     }
     public function submitContactForm1(Request $request)
     {

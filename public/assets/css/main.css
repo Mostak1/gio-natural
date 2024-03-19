@@ -2445,6 +2445,14 @@ a.cart-btn {
   padding: 10px 20px;
 }
 
+a.buy-btn {
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    background-color: #049150;
+    color: #fff;
+    padding: 10px 20px;
+  }
+
 a.cart-btn i {
   margin-right: 5px;
 }

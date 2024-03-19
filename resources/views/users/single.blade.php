@@ -34,6 +34,7 @@
 
                             {{-- <input type="number" name="quantity" placeholder="0"> --}}
                             <a type="submit" data-id="{{$product->id}}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                            <a type="submit" data-id="{{$product->id}}" class="cart-btn buy-btn"><i class="fas fa-shopping-bag"></i> Buy Now</a>
 
                             <p><strong>Categories: </strong>{{ $product->category->name }}</p>
                         </div>
