@@ -26,7 +26,7 @@
 
                     <div class="contact-form">
                         {{-- <form type="POST"  onSubmit="return valid_datas( this );"> --}}
-                        <form method="" id="fruitkha-contact">
+                        <form method="" id="GIO Naturals-contact">
                             <p>
                                 <input type="tel" placeholder="Phone" value="{{ old('phone') }}" name="phone"
                                     id="phone">
@@ -56,7 +56,7 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
 @endsection
 @section('scripts')
@@ -89,14 +89,14 @@
                         <h5 class="card-title">Invoice Number: ${item.invoice_number} and Id ${item.id}</h5>
                         <div class="card-subtitle mb-2 text-body-secondary row row-cols-2">
                             <div class="col text-warning-emphasis">Status: ${item.status}</div>
-                            <div class="col">Total Payment: ${item.subtotal}</div> 
+                            <div class="col">Total Payment: ${item.subtotal}</div>
                             </div>
                             <a href="{{url('orderDetails/3')}}" class="cart-btn">Order Details</a>
-                        
+
                         <hr/>`;
                             // Assuming orderDetails is available and contains product details
                             var orderDetails = item.order_details;
-                            
+
                             $.each(orderDetails, function(index1, itemD) {
                                 order += `
                          <div class="card-text">

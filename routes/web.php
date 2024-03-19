@@ -27,6 +27,7 @@ Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('news', [HomeController::class, 'news'])->name('news');
+Route::get('newsDetails', [HomeController::class, 'nDetails'])->name('newsDetails');
 Route::get('cart', [HomeController::class, 'cart'])->name('cart');
 Route::post('submit-contact-form', [HomeController::class, 'submitContactForm'])->name('contactForm');
 Route::get('productjson', [ProductController::class, 'productJson']);
@@ -53,7 +54,7 @@ Route::middleware('auth')->group(function () {
         'order' => OrderController::class,
         // 'product' => ProductController::class,
      ]);
-     
+
 });
 
 require __DIR__.'/auth.php';

@@ -32,6 +32,10 @@ class HomeController extends Controller
     {
         return view('users.news');
     }
+    public function nDetails()
+    {
+        return view('users.newsDetails');
+    }
     public function cart(Request $request)
     {
         $cartItemIds = $request->session()->get('cart', []);

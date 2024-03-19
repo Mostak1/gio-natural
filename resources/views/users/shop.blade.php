@@ -88,7 +88,7 @@
                         '<div class="single-product-item">' +
                         '<div class="product-image">' +
                         '<a href="{{ url('product') }}/' + product.id +
-                        '"><img height="150px" src="{{ asset('storage/') }}/' +
+                        '"><img src="{{ asset('storage/') }}/' +
                         product.thumbnail + '" alt=""></a>' +
                         '</div>' +
                         '<a href="{{ url('product') }}/' + product.id + '"><h3 class="text-truncate">' +

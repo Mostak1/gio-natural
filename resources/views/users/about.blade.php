@@ -1,6 +1,6 @@
 @extends('users.layouts.main')
 @section('title', 'About Us - Gio-Natural')
-@section('content') 
+@section('content')
 
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg">
@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-lg-7">
 					<div class="featured-text">
-						<h2 class="pb-3">Why <span class="orange-text">Fruitkha</span></h2>
+						<h2 class="pb-3">Why <span class="orange-text">GIO Naturals</span></h2>
 						<div class="row">
 							<div class="col-lg-6 col-md-6 mb-4 mb-md-5">
 								<div class="list-box d-flex">
