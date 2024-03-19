@@ -49,11 +49,11 @@
 					<div class="footer-box pages">
 						<h2 class="widget-title">Pages</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="services.html">Shop</a></li>
-							<li><a href="news.html">News</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="{{ url('/') }}">Home</a></li>
+							<li><a href="{{ url('about') }}">About</a></li>
+							<li><a href="{{ url('shop') }}">Shop</a></li>
+							<li><a href="{{ url('news') }}">News</a></li>
+							<li><a href="{{ url('contact') }}">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -71,14 +71,14 @@
 		</div>
 	</div>
 	<!-- end footer -->
-	
+
 	<!-- copyright -->
 	<div class="copyright">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-12">
 					<p>Copyrights &copy; 2024 - <a href="https://mostaksarker.com/">Gio-Natural</a>,  All Rights Reserved -Gio-Natural.<br>
-						
+
 					</p>
 				</div>
 				<div class="col-lg-6 text-right col-md-12">
@@ -96,4 +96,3 @@
 		</div>
 	</div>
 	<!-- end copyright -->
-	

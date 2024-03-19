@@ -24,11 +24,8 @@
                 <div class="col-lg-8 mb-5 mb-lg-0">
                     <div class="form-title">
                         <h2>Have you any question?</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, ratione! Laboriosam est,
-                            assumenda. Perferendis, quo alias quaerat aliquid. Corporis ipsum minus voluptate? Dolore, esse
-                            natus!</p>
                     </div>
-                    
+
 
                     <div id="form_status"></div>
                     <div class="contact-form">
@@ -88,7 +85,7 @@
     <div class="embed-responsive embed-responsive-21by9">
         <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d383.8528425376564!2d90.37739732627897!3d23.752932801513765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b9ab02563567%3A0xae9753c60a67940!2sGreen%20Kitchen!5e0!3m2!1sen!2sbd!4v1706179074929!5m2!1sen!2sbd"
-            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
     <!-- end google map section -->
