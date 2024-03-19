@@ -3,7 +3,7 @@
 
 @endsection
 @section('content')
-    
+
 
     <div class="container mx-auto">
 
@@ -22,9 +22,12 @@
             <table id="dataTable" class="w-full text-sm text-left rtl:text-right text-teal-500 dark:text-teal-400 my-10">
                 <thead class="text-xs text-gray-700 uppercase bg-teal-50 dark:bg-teal-200 dark:text-teal-400">
                     <tr>
-                        <th colspan="3" class="tablebtn"></th>
+                        <th colspan="4" class="tablebtn"></th>
                     </tr>
                     <tr>
+                        <th scope="col" class="px-6 py-3">
+                            ID
+                        </th>
                         <th scope="col" class="px-6 py-3">
                             Category Name
                         </th>
@@ -41,6 +44,10 @@
                     @foreach ($categories as $item)
                         <tr
                             class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            <th
+                            class="px-6 py-4">
+                            {{ $item->id }}
+                        </th>
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $item->name }}
@@ -70,7 +77,7 @@
                     @endforeach
                 </tbody>
             </table>
-            
+
         </div>
         <div class="my-8">
             {{-- {{ $categories->onEachSide(1)->links() }} --}}
